@@ -1,0 +1,21 @@
+{% load l10n %}
+
+{% include "pdfmanager/pdf_partials/header.html" %}
+
+<h1>{{ title }}</h1>
+
+<p>{{ body_text }}</p>
+
+{% if image_url %}
+  <img src="{{ image_url }}" alt="Image" style="max-width: 300px; margin-top: 1em;" />
+{% endif %}
+
+<p style="margin-top: 1.5em; font-style: italic; color: #555;">
+  {% include "pdfmanager/pdf_partials/date_format.html" with date=publish_date language='fr' %}
+</p>
+
+<p style="font-weight: bold;">
+  {% include "pdfmanager/pdf_partials/currency_format.html" with amount=price language='fr' %}
+</p>
+
+{% include "pdfmanager/pdf_partials/footer.html" %}

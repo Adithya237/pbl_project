@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="{% get_current_language %}">
+<head>
+    <meta charset="UTF-8" />
+    <title>{% block title %}Multilingual PDF App{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
+</head>
+<body>
+    <header>
+        <h1>{% trans "Multilingual PDF Generator" %}</h1>
+        <nav>
+            <a href="{% url 'pdfmanager:index' %}">{% trans "Home" %}</a>
+        </nav>
+        <hr/>
+    </header>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer>
+        <hr/>
+        <p>&copy; 2025 Your Company</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,17 @@
+{% extends "pdfmanager/base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Preview PDFs" %}{% endblock %}
+
+{% block content %}
+<h2>{% trans "Original PDF" %}</h2>
+<iframe src="{{ original_pdf_url }}" width="48%" height="600px"></iframe>
+
+<h2>{% trans "Translated PDF" %}</h2>
+<iframe src="{{ translated_pdf_url }}" width="48%" height="600px"></iframe>
+
+<div>
+    <a href="{% url 'pdfmanager:download' pdf_id=translated_pdf_id %}">{% trans "Download Translated PDF" %}</a>
+    <a href="{% url 'pdfmanager:download_merged' pdf_ids=pdf_ids %}">{% trans "Download Merged PDF" %}</a>
+</div>
+{% endblock %}
