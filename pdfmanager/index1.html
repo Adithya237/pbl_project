@@ -1,0 +1,77 @@
+{% extends "pdfmanager/base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Upload & Translate PDF" %}{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+  <h2 class="mb-4">{% trans "Multilingual PDF Converter" %}</h2>
+  <form method="post" enctype="multipart/form-data" id="upload-form" class="needs-validation" novalidate>
+    {% csrf_token %}
+    
+    <div class="mb-3">
+      <label for="pdf_file" class="form-label">{% trans "Upload PDF File" %}</label>
+      <input type="file" class="form-control" id="pdf_file" name="pdf_file" accept="application/pdf" required>
+      <div class="invalid-feedback">
+        {% trans "Please select a valid PDF file." %}
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <label for="src_lang" class="form-label">{% trans "Source Language" %}</label>
+        <select class="form-select" name="src_lang" id="src_lang" required>
+          <option value="en">English</option>
+          <option value="es">Spanish</option>
+          <option value="fr">French</option>
+        </select>
+      </div>
+
+      <div class="col-md-6 mb-3">
+        <label for="tgt_lang" class="form-label">{% trans "Target Language" %}</label>
+        <select class="form-select" name="tgt_lang" id="tgt_lang" required>
+          <option value="en">English</option>
+          <option value="es">Spanish</option>
+          <option value="fr">French</option>
+        </select>
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">{% trans "Translate & Preview" %}</button>
+  </form>
+</div>
+
+<script>
+// Bootstrap validation
+(() => {
+  'use strict';
+  const form = document.querySelector('#upload-form');
+  form.addEventListener('submit', event => {
+    if (!form.checkValidity()) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+    form.classList.add('was-validated');
+  }, false);
+})();
+
+// Prevent selecting the same source and target language
+document.addEventListener('DOMContentLoaded', () => {
+  const srcLang = document.getElementById('src_lang');
+  const tgtLang = document.getElementById('tgt_lang');
+
+  function filterTargetOptions() {
+    const srcValue = srcLang.value;
+    Array.from(tgtLang.options).forEach(option => {
+      option.disabled = option.value === srcValue;
+    });
+    if (tgtLang.value === srcValue) {
+      tgtLang.value = '';
+    }
+  }
+
+  srcLang.addEventListener('change', filterTargetOptions);
+  filterTargetOptions(); // Run on load
+});
+</script>
+{% endblock %}
