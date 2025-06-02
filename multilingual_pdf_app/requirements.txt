@@ -1,0 +1,5 @@
+Django>=4.2,<5.0
+PyPDF2>=3.0.0
+reportlab>=3.6.12
+googletrans==4.0.0rc1
+Pillow>=9.0.0
